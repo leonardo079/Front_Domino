@@ -1,0 +1,39 @@
+# Dependencias
+/node_modules
+
+# Archivos de build
+/dist
+/tmp
+/out-tsc
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Entornos
+.env
+.env.local
+.env.*.local
+
+# Angular cache
+/.angular/cache
+
+# IDEs y editores
+.vscode/
+.idea/
+
+# Archivos de configuración opcionales
+.angular
+.angular-cli.json
+
+# Archivos de test
+/coverage
+
+# Otros
+*.log
+*.tmp
