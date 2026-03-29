@@ -1,0 +1,15 @@
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" routerLink="/">Domino AI Arena</a>
+    <nav aria-label="Navegacion principal">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      <a routerLink="/game/agent-vs-agent" routerLinkActive="active">Agent vs Agent</a>
+      <a routerLink="/game/agent-vs-human" routerLinkActive="active">Agent vs Human</a>
+      <a routerLink="/benchmark" routerLinkActive="active">Benchmark</a>
+    </nav>
+  </header>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>

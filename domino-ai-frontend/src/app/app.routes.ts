@@ -7,29 +7,24 @@ export const routes: Routes = [
       import('./features/home/home.component').then(m => m.HomeComponent)
   },
   {
-    path: 'game/new',
+    path: 'game/agent-vs-agent',
     loadComponent: () =>
-      import('./features/game/new-game/new-game.component').then(m => m.NewGameComponent)
+      import('./features/game/agent-vs-agent/agent-vs-agent.component').then(m => m.AgentVsAgentComponent)
   },
   {
-    path: 'game/:id',
+    path: 'game/agent-vs-human',
     loadComponent: () =>
-      import('./features/game/game-view/game-view.component').then(m => m.GameViewComponent)
+      import('./features/game/agent-vs-human/agent-vs-human.component').then(m => m.AgentVsHumanComponent)
   },
   {
     path: 'game/:id/summary',
     loadComponent: () =>
-      import('./features/game/game-summary/game-summary.component').then(m => m.GameSummaryComponent)
+      import('./features/metrics-summary/metrics-summary.component').then(m => m.MetricsSummaryComponent)
   },
   {
     path: 'benchmark',
     loadComponent: () =>
       import('./features/benchmark/benchmark.component').then(m => m.BenchmarkComponent)
-  },
-  {
-    path: 'strategies',
-    loadComponent: () =>
-      import('./features/strategies/strategies.component').then(m => m.StrategiesComponent)
   },
   { path: '**', redirectTo: '' }
 ];

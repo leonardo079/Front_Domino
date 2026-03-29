@@ -1,0 +1,18 @@
+<section class="hero">
+  <div>
+    <p class="kicker">Domino AI Frontend</p>
+    <h1>Visualizacion en tiempo real de jugadas, costos y arboles de busqueda</h1>
+    <p>
+      Este panel consume la API FastAPI para partidas en vivo, benchmark por streaming y resumen de metricas
+      al finalizar cada partida.
+    </p>
+  </div>
+</section>
+
+<section class="module-grid" aria-label="Modulos disponibles">
+  <article class="card module" *ngFor="let module of modules">
+    <h2>{{ module.title }}</h2>
+    <p>{{ module.description }}</p>
+    <a class="btn btn-primary" [routerLink]="module.route">{{ module.cta }}</a>
+  </article>
+</section>

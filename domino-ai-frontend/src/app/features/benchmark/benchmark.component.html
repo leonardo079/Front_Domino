@@ -1,0 +1,78 @@
+<section class="benchmark-layout">
+  <aside class="card controls">
+    <h2>Benchmark</h2>
+    <p>Selecciona modelos y numero de partidas para evaluar eficiencia y tasa de victoria.</p>
+
+    <label>
+      Partidas por matchup
+      <input type="number" [(ngModel)]="nGames" min="1" max="200" />
+    </label>
+
+    <fieldset>
+      <legend>Matchups</legend>
+      <label class="check" *ngFor="let matchup of matchups">
+        <input
+          type="checkbox"
+          [checked]="selectedTags.has(matchup.tag)"
+          (change)="toggleMatchup(matchup.tag, $any($event.target).checked)" />
+        <span>{{ matchup.label }}</span>
+      </label>
+    </fieldset>
+
+    <button class="btn btn-primary" (click)="runBenchmark()" [disabled]="running">
+      {{ running ? 'Ejecutando...' : 'Iniciar benchmark' }}
+    </button>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+  </aside>
+
+  <section class="content">
+    <article class="card status">
+      <h3 class="section-title">Estado</h3>
+      <p><strong>Run ID:</strong> {{ runId || '-' }}</p>
+      <p><strong>Resultados:</strong> {{ results.length }}</p>
+      <p><strong>Tiempo total:</strong> {{ totalTime ? (totalTime + ' s') : '-' }}</p>
+    </article>
+
+    <article class="card" *ngIf="results.length; else noResults">
+      <h3 class="section-title">Resultados por matchup</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Matchup</th>
+              <th>Wins A</th>
+              <th>Wins B</th>
+              <th>Empates</th>
+              <th>Win Rate A</th>
+              <th>Turns Avg</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of results">
+              <td>{{ row.label }}</td>
+              <td>{{ row.wins_a }}</td>
+              <td>{{ row.wins_b }}</td>
+              <td>{{ row.draws }}</td>
+              <td>{{ row.win_rate_a }}%</td>
+              <td>{{ row.avg_turns }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <ng-template #noResults>
+      <article class="card">
+        <p class="muted">Sin resultados aun. Lanza el benchmark para ver el resumen en tiempo real.</p>
+      </article>
+    </ng-template>
+
+    <article class="card event-log">
+      <h3 class="section-title">Eventos de stream</h3>
+      <ul>
+        <li *ngFor="let event of events.slice().reverse() | slice:0:80">{{ event.type }} {{ $any(event).label || '' }}</li>
+      </ul>
+    </article>
+  </section>
+</section>

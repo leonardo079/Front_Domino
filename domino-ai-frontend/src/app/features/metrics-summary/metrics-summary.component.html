@@ -1,0 +1,31 @@
+<section class="card summary" [class.embedded]="embedded">
+  <h2 *ngIf="!embedded">Modulo de metricas resumen</h2>
+  <p class="subtitle">Compara costos promedio y progreso global al finalizar la partida.</p>
+
+  <p *ngIf="loading">Cargando metricas...</p>
+  <p class="error" *ngIf="error">{{ error }}</p>
+
+  <ng-container *ngIf="summary as s">
+    <div class="headline-grid">
+      <article class="chip">
+        <span>Winner</span>
+        <strong>{{ s.winner }}</strong>
+      </article>
+      <article class="chip">
+        <span>Turns</span>
+        <strong>{{ s.total_turns }}</strong>
+      </article>
+      <article class="chip">
+        <span>Pips A/B</span>
+        <strong>{{ s.pip_sum_a }} / {{ s.pip_sum_b }}</strong>
+      </article>
+    </div>
+
+    <div class="charts-grid">
+      <article class="chart" *ngFor="let chart of entries(s.endgame_charts)">
+        <h3>{{ chart[0] }}</h3>
+        <pre>{{ chart[1] | json }}</pre>
+      </article>
+    </div>
+  </ng-container>
+</section>
