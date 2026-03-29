@@ -1,0 +1,95 @@
+.page-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: .9rem;
+}
+
+.controls {
+  position: sticky;
+  top: 78px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-display);
+  }
+
+  p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    font-size: .9rem;
+    color: var(--ink-soft);
+  }
+}
+
+select,
+input {
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  border-radius: .5rem;
+  color: var(--ink-strong);
+  padding: .5rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.error {
+  color: var(--danger);
+  font-size: .82rem;
+}
+
+.session {
+  border-top: 1px dashed var(--border);
+  padding-top: .7rem;
+  display: grid;
+  gap: .2rem;
+  font-size: .85rem;
+}
+
+.content {
+  display: grid;
+  gap: .85rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .6rem;
+
+  .card {
+    display: grid;
+    gap: .3rem;
+  }
+
+  strong {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 1080px) {
+  .page-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    position: static;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

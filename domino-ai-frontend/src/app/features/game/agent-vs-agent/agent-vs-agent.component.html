@@ -1,0 +1,64 @@
+<section class="page-grid">
+  <aside class="card controls">
+    <h2>Agent vs Agent</h2>
+    <p>Configura estrategias y velocidad para visualizar jugadas, metricas y arboles de busqueda.</p>
+
+    <label>
+      Agente A
+      <select [(ngModel)]="selectedA">
+        <option *ngFor="let s of strategies" [value]="s.name">{{ s.name }}</option>
+      </select>
+    </label>
+
+    <label>
+      Agente B
+      <select [(ngModel)]="selectedB">
+        <option *ngFor="let s of strategies" [value]="s.name">{{ s.name }}</option>
+      </select>
+    </label>
+
+    <label>
+      Delay entre turnos (ms)
+      <input type="number" [(ngModel)]="delayMs" min="0" max="3000" step="50" />
+    </label>
+
+    <div class="actions">
+      <button class="btn btn-primary" type="button" (click)="startGame()" [disabled]="loading">Nueva partida</button>
+      <button class="btn btn-secondary" type="button" (click)="pauseGame()" [disabled]="!running">Pausar</button>
+      <button class="btn btn-secondary" type="button" (click)="resumeGame()" [disabled]="running || !sessionId">Continuar</button>
+    </div>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+
+    <div class="session" *ngIf="snapshot">
+      <p><strong>Sesion:</strong> {{ snapshot.session_id }}</p>
+      <p><strong>Turno:</strong> {{ snapshot.turn }}</p>
+      <p><strong>Estado:</strong> {{ snapshot.status }}</p>
+      <p><strong>Pozo:</strong> {{ snapshot.pool_size }}</p>
+      <a class="btn btn-secondary btn-sm" [routerLink]="['/game', snapshot.session_id, 'summary']" *ngIf="snapshot.status === 'finished'">Ver modulo resumen</a>
+    </div>
+  </aside>
+
+  <section class="content" *ngIf="snapshot as game">
+    <app-domino-board [tiles]="game.board" [leftEnd]="game.left_end" [rightEnd]="game.right_end"></app-domino-board>
+
+    <div class="stats-grid">
+      <div class="card"><span class="section-title">Mano A</span><strong>{{ game.hand_size_a }}</strong></div>
+      <div class="card"><span class="section-title">Mano B</span><strong>{{ game.hand_size_b }}</strong></div>
+      <div class="card"><span class="section-title">Pips A</span><strong>{{ game.pip_sum_a }}</strong></div>
+      <div class="card"><span class="section-title">Pips B</span><strong>{{ game.pip_sum_b }}</strong></div>
+    </div>
+
+    <app-realtime-metrics [metrics]="metrics"></app-realtime-metrics>
+    <app-search-tree [tree]="tree"></app-search-tree>
+    <app-turn-log [events]="events"></app-turn-log>
+
+    <section class="card" *ngIf="summary as s">
+      <h3 class="section-title">Resumen final rapido</h3>
+      <p><strong>Winner:</strong> {{ s.winner }}</p>
+      <p><strong>Total turnos:</strong> {{ s.total_turns }}</p>
+      <p><strong>Pips A/B:</strong> {{ s.pip_sum_a }} / {{ s.pip_sum_b }}</p>
+      <a class="btn btn-secondary btn-sm" [routerLink]="['/game', sessionId, 'summary']">Abrir modulo resumen completo</a>
+    </section>
+  </section>
+</section>

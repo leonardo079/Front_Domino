@@ -1,0 +1,57 @@
+<section class="page-grid">
+  <aside class="card controls">
+    <h2>Agent vs Human</h2>
+    <p>El agente juega como Player 0 y el humano como Player 1.</p>
+
+    <label>
+      Estrategia del agente
+      <select [(ngModel)]="selectedAI">
+        <option *ngFor="let s of strategies" [value]="s.name">{{ s.name }}</option>
+      </select>
+    </label>
+
+    <button class="btn btn-primary" type="button" (click)="startGame()" [disabled]="loading || runningAI">Nueva partida</button>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+
+    <div class="session" *ngIf="snapshot">
+      <p><strong>Sesion:</strong> {{ snapshot.session_id }}</p>
+      <p><strong>Estado:</strong> {{ snapshot.status }}</p>
+      <p><strong>Turno actual:</strong> J{{ snapshot.current_player }}</p>
+      <p><strong>Pozo:</strong> {{ snapshot.pool_size }}</p>
+      <a class="btn btn-secondary btn-sm" [routerLink]="['/game', snapshot.session_id, 'summary']" *ngIf="snapshot.status === 'finished'">Ver modulo resumen</a>
+    </div>
+  </aside>
+
+  <section class="content" *ngIf="snapshot as game">
+    <app-domino-board [tiles]="game.board" [leftEnd]="game.left_end" [rightEnd]="game.right_end"></app-domino-board>
+
+    <div class="status-chip" [class.waiting]="canHumanPlay" [class.ai]="runningAI">
+      <span *ngIf="runningAI">Turno del agente...</span>
+      <span *ngIf="!runningAI && canHumanPlay">Tu turno: elige una ficha.</span>
+      <span *ngIf="!runningAI && !canHumanPlay && game.status !== 'finished'">Esperando al agente.</span>
+      <span *ngIf="game.status === 'finished'">Partida finalizada.</span>
+    </div>
+
+    <app-human-controls
+      [tiles]="humanTiles"
+      [validMoves]="game.human_valid_moves ?? []"
+      [poolSize]="game.pool_size"
+      (play)="playHuman($event)"
+      (pass)="passHuman()"
+      *ngIf="canHumanPlay">
+    </app-human-controls>
+
+    <app-realtime-metrics [metrics]="metrics"></app-realtime-metrics>
+    <app-search-tree [tree]="tree"></app-search-tree>
+    <app-turn-log [events]="events"></app-turn-log>
+
+    <section class="card" *ngIf="summary as s">
+      <h3 class="section-title">Resumen final rapido</h3>
+      <p><strong>Winner:</strong> {{ s.winner }}</p>
+      <p><strong>Total turnos:</strong> {{ s.total_turns }}</p>
+      <p><strong>Pips A/B:</strong> {{ s.pip_sum_a }} / {{ s.pip_sum_b }}</p>
+      <a class="btn btn-secondary btn-sm" [routerLink]="['/game', sessionId, 'summary']">Abrir modulo resumen completo</a>
+    </section>
+  </section>
+</section>
