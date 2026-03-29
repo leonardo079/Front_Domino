@@ -9,7 +9,7 @@ import { HumanPlayableMove, HumanTile } from '../../../core/models/api.models';
   template: `
     <section class="card" *ngIf="tiles.length">
       <h3 class="section-title">Tu mano</h3>
-      <p class="hint">Selecciona una ficha y un lado para jugar.</p>
+      <p class="hint">{{ helperText }}</p>
 
       <div class="tiles" aria-label="Fichas del jugador humano">
         <button
@@ -33,7 +33,7 @@ import { HumanPlayableMove, HumanTile } from '../../../core/models/api.models';
         </button>
 
         <button type="button" class="btn btn-danger btn-sm" (click)="pass.emit()" [disabled]="validMoves.length > 0">
-          Pasar
+          {{ actionButtonLabel }}
         </button>
       </div>
     </section>
@@ -43,6 +43,7 @@ import { HumanPlayableMove, HumanTile } from '../../../core/models/api.models';
 export class HumanControlsComponent {
   @Input() tiles: HumanTile[] = [];
   @Input() validMoves: HumanPlayableMove[] = [];
+  @Input() poolSize = 0;
 
   @Output() play = new EventEmitter<{ tile: HumanTile; side: 'left' | 'right' }>();
   @Output() pass = new EventEmitter<void>();
@@ -51,6 +52,22 @@ export class HumanControlsComponent {
 
   get selectedKey(): string | null {
     return this.selected ? this.tileKey(this.selected) : null;
+  }
+
+  get actionButtonLabel(): string {
+    if (this.validMoves.length > 0) {
+      return 'Pasar';
+    }
+    return this.poolSize > 0 ? 'Robar del pozo' : 'Pasar';
+  }
+
+  get helperText(): string {
+    if (this.validMoves.length > 0) {
+      return 'Selecciona una ficha y un lado para jugar.';
+    }
+    return this.poolSize > 0
+      ? 'No tienes jugadas. Pulsa "Robar del pozo" para tomar fichas automaticamente.'
+      : 'No hay jugadas ni pozo disponible. Puedes pasar el turno.';
   }
 
   tileKey(tile: Pick<HumanTile, 'a' | 'b'>): string {

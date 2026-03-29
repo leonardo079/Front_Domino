@@ -36,6 +36,7 @@
     <app-human-controls
       [tiles]="humanTiles"
       [validMoves]="game.human_valid_moves ?? []"
+      [poolSize]="game.pool_size"
       (play)="playHuman($event)"
       (pass)="passHuman()"
       *ngIf="canHumanPlay">
