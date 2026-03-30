@@ -54,7 +54,12 @@
               <td>{{ row.wins_a }}</td>
               <td>{{ row.wins_b }}</td>
               <td>{{ row.draws }}</td>
-              <td>{{ row.win_rate_a }}%</td>
+              <td class="rate-cell">
+                <div class="rate-track" aria-hidden="true">
+                  <div class="rate-fill" [style.width.%]="row.win_rate_a"></div>
+                </div>
+                <span>{{ row.win_rate_a }}%</span>
+              </td>
               <td>{{ row.avg_turns }}</td>
             </tr>
           </tbody>

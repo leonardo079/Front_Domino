@@ -22,9 +22,166 @@
     </div>
 
     <div class="charts-grid">
-      <article class="chart" *ngFor="let chart of entries(s.endgame_charts)">
-        <h3>{{ chart[0] }}</h3>
-        <pre>{{ chart[1] | json }}</pre>
+      <article class="chart" *ngIf="costComparison as chart">
+        <h3>Comparacion de costos promedio</h3>
+        <p class="chart-subtitle">{{ chart.description }}</p>
+
+        <div class="bars-chart">
+          <div class="y-axis">
+            <span>{{ formatAxisValue(maxCostBarValue()) }}</span>
+            <span>{{ formatAxisValue(maxCostBarValue() / 2) }}</span>
+            <span>0</span>
+          </div>
+
+          <div class="bars-groups bars-with-axis">
+            <div class="bars-group" *ngFor="let metric of chart.metrics">
+              <div class="bars-pair">
+                <div class="bar a" [style.height.%]="toPercent(chart.strategy_a[metric] ?? 0, maxCostBarValue())">
+                  <span>{{ (chart.strategy_a[metric] ?? 0) | number:'1.0-2' }}</span>
+                </div>
+                <div class="bar b" [style.height.%]="toPercent(chart.strategy_b[metric] ?? 0, maxCostBarValue())">
+                  <span>{{ (chart.strategy_b[metric] ?? 0) | number:'1.0-2' }}</span>
+                </div>
+              </div>
+              <p class="bar-label">{{ formatMetricLabel(metric) }}</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="legend"><span class="dot a"></span>{{ s.strategy_a }} <span class="dot b"></span>{{ s.strategy_b }}</p>
+      </article>
+
+      <article class="chart" *ngIf="cumulativeTime as chart">
+        <h3>Tiempo acumulado</h3>
+        <p class="chart-subtitle">{{ chart.description }}</p>
+        <svg class="line-chart" viewBox="0 0 320 200" role="img" aria-label="Comparacion de tiempo acumulado por turnos">
+          <g class="axis-grid">
+            <line
+              *ngFor="let tick of lineYTicks(maxSeriesValue(chart.series_a, chart.series_b))"
+              x1="42"
+              [attr.y1]="lineY(tick, maxSeriesValue(chart.series_a, chart.series_b))"
+              x2="306"
+              [attr.y2]="lineY(tick, maxSeriesValue(chart.series_a, chart.series_b))"></line>
+          </g>
+
+          <line class="axis" x1="42" y1="170" x2="306" y2="170"></line>
+          <line class="axis" x1="42" y1="14" x2="42" y2="170"></line>
+
+          <text
+            *ngFor="let tick of lineYTicks(maxSeriesValue(chart.series_a, chart.series_b))"
+            x="36"
+            [attr.y]="lineY(tick, maxSeriesValue(chart.series_a, chart.series_b)) + 4"
+            text-anchor="end"
+            class="axis-label">{{ formatAxisValue(tick) }}</text>
+
+          <text
+            *ngFor="let turn of lineXTicks(maxTurn(chart.series_a, chart.series_b))"
+            [attr.x]="lineX(turn, maxTurn(chart.series_a, chart.series_b))"
+            y="188"
+            text-anchor="middle"
+            class="axis-label">{{ turn }}</text>
+
+          <polyline [attr.points]="toLinePoints(chart.series_a, maxTurn(chart.series_a, chart.series_b), maxSeriesValue(chart.series_a, chart.series_b))" class="line-a"></polyline>
+          <polyline [attr.points]="toLinePoints(chart.series_b, maxTurn(chart.series_a, chart.series_b), maxSeriesValue(chart.series_a, chart.series_b))" class="line-b"></polyline>
+        </svg>
+        <p class="legend"><span class="dot a"></span>{{ s.strategy_a }} <span class="dot b"></span>{{ s.strategy_b }}</p>
+      </article>
+
+      <article class="chart" *ngIf="cumulativeNodes as chart">
+        <h3>Nodos acumulados</h3>
+        <p class="chart-subtitle">{{ chart.description }}</p>
+        <svg class="line-chart" viewBox="0 0 320 200" role="img" aria-label="Comparacion de nodos acumulados por turnos">
+          <g class="axis-grid">
+            <line
+              *ngFor="let tick of lineYTicks(maxSeriesValue(chart.series_a, chart.series_b))"
+              x1="42"
+              [attr.y1]="lineY(tick, maxSeriesValue(chart.series_a, chart.series_b))"
+              x2="306"
+              [attr.y2]="lineY(tick, maxSeriesValue(chart.series_a, chart.series_b))"></line>
+          </g>
+
+          <line class="axis" x1="42" y1="170" x2="306" y2="170"></line>
+          <line class="axis" x1="42" y1="14" x2="42" y2="170"></line>
+
+          <text
+            *ngFor="let tick of lineYTicks(maxSeriesValue(chart.series_a, chart.series_b))"
+            x="36"
+            [attr.y]="lineY(tick, maxSeriesValue(chart.series_a, chart.series_b)) + 4"
+            text-anchor="end"
+            class="axis-label">{{ formatAxisValue(tick) }}</text>
+
+          <text
+            *ngFor="let turn of lineXTicks(maxTurn(chart.series_a, chart.series_b))"
+            [attr.x]="lineX(turn, maxTurn(chart.series_a, chart.series_b))"
+            y="188"
+            text-anchor="middle"
+            class="axis-label">{{ turn }}</text>
+
+          <polyline [attr.points]="toLinePoints(chart.series_a, maxTurn(chart.series_a, chart.series_b), maxSeriesValue(chart.series_a, chart.series_b))" class="line-a"></polyline>
+          <polyline [attr.points]="toLinePoints(chart.series_b, maxTurn(chart.series_a, chart.series_b), maxSeriesValue(chart.series_a, chart.series_b))" class="line-b"></polyline>
+        </svg>
+        <p class="legend"><span class="dot a"></span>{{ s.strategy_a }} <span class="dot b"></span>{{ s.strategy_b }}</p>
+      </article>
+
+      <article class="chart" *ngIf="depthDistribution as chart">
+        <h3>Distribucion de profundidad</h3>
+        <p class="chart-subtitle">{{ chart.description }}</p>
+        <div class="bars-chart">
+          <div class="y-axis">
+            <span>{{ formatAxisValue(maxDepthValue()) }}</span>
+            <span>{{ formatAxisValue(maxDepthValue() / 2) }}</span>
+            <span>0</span>
+          </div>
+
+          <div class="bars-groups bars-with-axis">
+            <div class="bars-group" *ngFor="let bin of depthBins">
+              <div class="bars-pair">
+                <div class="bar a" [style.height.%]="toPercent(depthValue('a', bin), maxDepthValue())">
+                  <span>{{ depthValue('a', bin) }}</span>
+                </div>
+                <div class="bar b" [style.height.%]="toPercent(depthValue('b', bin), maxDepthValue())">
+                  <span>{{ depthValue('b', bin) }}</span>
+                </div>
+              </div>
+              <p class="bar-label">D{{ bin }}</p>
+            </div>
+          </div>
+        </div>
+        <p class="legend"><span class="dot a"></span>{{ s.strategy_a }} <span class="dot b"></span>{{ s.strategy_b }}</p>
+      </article>
+
+      <article class="chart" *ngIf="radar as chart">
+        <h3>Radar comparativo</h3>
+        <p class="chart-subtitle">{{ chart.description }}</p>
+        <svg class="radar" viewBox="0 0 240 240" role="img" aria-label="Radar comparativo de metricas finales">
+          <circle cx="120" cy="120" r="90" class="radar-grid"></circle>
+          <circle cx="120" cy="120" r="60" class="radar-grid"></circle>
+          <circle cx="120" cy="120" r="30" class="radar-grid"></circle>
+          <line *ngFor="let axis of radarAxes()" x1="120" y1="120" [attr.x2]="axis.x" [attr.y2]="axis.y" class="radar-axis"></line>
+          <polygon [attr.points]="radarPoints('a')" class="radar-a"></polygon>
+          <polygon [attr.points]="radarPoints('b')" class="radar-b"></polygon>
+          <text *ngFor="let axis of radarAxes()" [attr.x]="axis.lx" [attr.y]="axis.ly" text-anchor="middle" class="radar-label">{{ formatMetricLabel(axis.axis) }}</text>
+        </svg>
+        <p class="legend"><span class="dot a"></span>{{ s.strategy_a }} <span class="dot b"></span>{{ s.strategy_b }}</p>
+      </article>
+
+      <article class="chart" *ngIf="pipBalance as chart">
+        <h3>Balance de pips</h3>
+        <p class="chart-subtitle">{{ chart.description }}</p>
+        <div class="hbar-row">
+          <span>{{ s.strategy_a }}</span>
+          <div class="hbar-wrap">
+            <div class="hbar a" [style.width.%]="toPercent(pipValue('a'), maxPipBarValue())"></div>
+          </div>
+          <strong>{{ pipValue('a') }}</strong>
+        </div>
+        <div class="hbar-row">
+          <span>{{ s.strategy_b }}</span>
+          <div class="hbar-wrap">
+            <div class="hbar b" [style.width.%]="toPercent(pipValue('b'), maxPipBarValue())"></div>
+          </div>
+          <strong>{{ pipValue('b') }}</strong>
+        </div>
       </article>
     </div>
   </ng-container>

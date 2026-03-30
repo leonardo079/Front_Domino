@@ -49,8 +49,11 @@
       <div class="card"><span class="section-title">Pips B</span><strong>{{ game.pip_sum_b }}</strong></div>
     </div>
 
-    <app-realtime-metrics [metrics]="metrics"></app-realtime-metrics>
-    <app-search-tree [tree]="tree"></app-search-tree>
+    <section class="visual-grid">
+      <app-realtime-metrics [metrics]="metrics"></app-realtime-metrics>
+      <app-search-tree [tree]="tree"></app-search-tree>
+    </section>
+
     <app-turn-log [events]="events"></app-turn-log>
 
     <section class="card" *ngIf="summary as s">

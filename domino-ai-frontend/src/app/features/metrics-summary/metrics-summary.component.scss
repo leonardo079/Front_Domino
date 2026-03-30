@@ -1,6 +1,6 @@
 .summary {
   display: grid;
-  gap: .8rem;
+  gap: 1rem;
 
   h2 {
     margin: 0;
@@ -19,15 +19,15 @@
 
 .headline-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: .6rem;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  gap: .8rem;
 }
 
 .chip {
-  border: 1px solid var(--border);
-  border-radius: .6rem;
-  padding: .55rem .7rem;
-  background: var(--surface-strong);
+  border: 1px solid #d8dde7;
+  border-radius: .65rem;
+  padding: .75rem .8rem;
+  background: #ffffff;
 
   span {
     display: block;
@@ -44,29 +44,228 @@
 
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: .7rem;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: .95rem;
 }
 
 .chart {
-  border: 1px solid var(--border);
-  border-radius: .6rem;
-  padding: .6rem;
-  background: var(--surface);
+  border: 1px solid #d8dde7;
+  border-radius: .7rem;
+  padding: .9rem;
+  background: #ffffff;
+  display: grid;
+  gap: .65rem;
 
   h3 {
-    margin: 0 0 .4rem;
-    font-size: .92rem;
+    margin: 0;
+    font-size: 1rem;
     text-transform: capitalize;
   }
+}
 
-  pre {
-    margin: 0;
-    max-height: 220px;
-    overflow: auto;
-    white-space: pre-wrap;
-    font-size: .75rem;
-    color: var(--ink-soft);
+.chart-subtitle {
+  margin: 0;
+  color: #6d7688;
+  font-size: .84rem;
+}
+
+.bars-chart {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: .5rem;
+  min-height: 230px;
+}
+
+.y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: #6d7688;
+  font-size: .72rem;
+  font-family: var(--font-mono);
+}
+
+.bars-groups {
+  min-height: 230px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+  align-items: end;
+  gap: .58rem;
+}
+
+.bars-with-axis {
+  border-left: 1px solid #d8dde7;
+  border-bottom: 1px solid #d8dde7;
+  padding: .45rem .45rem .1rem .6rem;
+}
+
+.bars-group {
+  display: grid;
+  gap: .35rem;
+}
+
+.bars-pair {
+  height: 170px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: .3rem;
+}
+
+.bar {
+  min-height: 2px;
+  border-radius: .2rem .2rem 0 0;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  span {
+    position: absolute;
+    top: -1.25rem;
+    font-size: .68rem;
+    color: #5f6878;
+    white-space: nowrap;
+  }
+
+  &.a {
+    background: #1d6fa5;
+  }
+
+  &.b {
+    background: #dd6b20;
+  }
+}
+
+.bar-label {
+  margin: 0;
+  text-align: center;
+  font-size: .74rem;
+  color: #5f6878;
+  text-transform: capitalize;
+}
+
+.line-chart {
+  width: 100%;
+  height: 220px;
+  background: #ffffff;
+  border: 1px solid #d8dde7;
+  border-radius: .5rem;
+}
+
+.axis-grid line {
+  stroke: #edf0f5;
+  stroke-width: 1;
+}
+
+.axis {
+  stroke: #9ba6bb;
+  stroke-width: 1;
+}
+
+.axis-label {
+  fill: #6d7688;
+  font-size: .52rem;
+  font-family: var(--font-mono);
+}
+
+.line-a {
+  fill: none;
+  stroke: #1d6fa5;
+  stroke-width: 2.2;
+}
+
+.line-b {
+  fill: none;
+  stroke: #dd6b20;
+  stroke-width: 2.2;
+}
+
+.radar {
+  width: 100%;
+  max-width: 280px;
+  justify-self: center;
+  background: #ffffff;
+  border: 1px solid #d8dde7;
+  border-radius: .45rem;
+}
+
+.radar-grid {
+  fill: none;
+  stroke: #d8dde7;
+}
+
+.radar-axis {
+  stroke: #c6cedd;
+  stroke-width: 1;
+}
+
+.radar-a {
+  fill: rgb(29 111 165 / 26%);
+  stroke: #1d6fa5;
+  stroke-width: 2;
+}
+
+.radar-b {
+  fill: rgb(221 107 32 / 26%);
+  stroke: #dd6b20;
+  stroke-width: 2;
+}
+
+.radar-label {
+  fill: #5f6878;
+  font-size: .53rem;
+}
+
+.legend {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .78rem;
+  color: #5f6878;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.a {
+  background: #1d6fa5;
+}
+
+.dot.b {
+  background: #dd6b20;
+}
+
+.hbar-row {
+  display: grid;
+  grid-template-columns: minmax(88px, 1fr) 4fr auto;
+  align-items: center;
+  gap: .45rem;
+}
+
+.hbar-wrap {
+  height: 18px;
+  background: #f5f7fb;
+  border: 1px solid #d8dde7;
+  border-radius: .45rem;
+  overflow: hidden;
+}
+
+.hbar {
+  height: 100%;
+
+  &.a {
+    background: #1d6fa5;
+  }
+
+  &.b {
+    background: #dd6b20;
   }
 }
 
@@ -77,5 +276,13 @@
 @media (max-width: 960px) {
   .headline-grid {
     grid-template-columns: 1fr;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bars-chart {
+    grid-template-columns: 26px 1fr;
   }
 }

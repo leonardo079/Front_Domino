@@ -42,8 +42,11 @@
       *ngIf="canHumanPlay">
     </app-human-controls>
 
-    <app-realtime-metrics [metrics]="metrics"></app-realtime-metrics>
-    <app-search-tree [tree]="tree"></app-search-tree>
+    <section class="visual-grid">
+      <app-realtime-metrics [metrics]="metrics"></app-realtime-metrics>
+      <app-search-tree [tree]="tree"></app-search-tree>
+    </section>
+
     <app-turn-log [events]="events"></app-turn-log>
 
     <section class="card" *ngIf="summary as s">
