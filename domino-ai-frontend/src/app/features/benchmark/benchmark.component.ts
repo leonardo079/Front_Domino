@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
 import { BenchmarkEvent, BenchmarkMatchupDone, MatchupConfig } from '../../core/models/api.models';
+import { BenchmarkChartsComponent } from './benchmark-charts.component';
 
 @Component({
   selector: 'app-benchmark',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BenchmarkChartsComponent],
   templateUrl: './benchmark.component.html',
   styleUrl: './benchmark.component.scss'
 })
@@ -90,12 +91,13 @@ export class BenchmarkComponent implements OnDestroy {
     }
 
     if (event.type === 'matchup_done') {
+      // Crear nueva referencia del array para que ngOnChanges se dispare
       this.results = [...this.results, event];
     }
 
     if (event.type === 'benchmark_done') {
       this.totalTime = event.total_time_s;
-      this.results = event.results;
+      this.results = [...event.results];
     }
   }
 }

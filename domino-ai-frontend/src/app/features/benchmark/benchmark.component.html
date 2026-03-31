@@ -27,6 +27,8 @@
   </aside>
 
   <section class="content">
+
+    <!-- ── Estado ── -->
     <article class="card status">
       <h3 class="section-title">Estado</h3>
       <p><strong>Run ID:</strong> {{ runId || '-' }}</p>
@@ -34,6 +36,7 @@
       <p><strong>Tiempo total:</strong> {{ totalTime ? (totalTime + ' s') : '-' }}</p>
     </article>
 
+    <!-- ── Tabla de resultados ── -->
     <article class="card" *ngIf="results.length; else noResults">
       <h3 class="section-title">Resultados por matchup</h3>
       <div class="table-wrap">
@@ -73,11 +76,18 @@
       </article>
     </ng-template>
 
+    <!-- ── Visualizaciones ── -->
+    <app-benchmark-charts [results]="results"></app-benchmark-charts>
+
+    <!-- ── Log de stream ── -->
     <article class="card event-log">
       <h3 class="section-title">Eventos de stream</h3>
       <ul>
-        <li *ngFor="let event of events.slice().reverse() | slice:0:80">{{ event.type }} {{ $any(event).label || '' }}</li>
+        <li *ngFor="let event of events.slice().reverse() | slice:0:80">
+          {{ event.type }} {{ $any(event).label || '' }}
+        </li>
       </ul>
     </article>
+
   </section>
 </section>
