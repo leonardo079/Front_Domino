@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HumanPlayableMove, HumanTile } from '../../../core/models/api.models';
+import { OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-human-controls',
   standalone: true,
   imports: [CommonModule],
-  template: `
+ template: `
     <section class="card" *ngIf="tiles.length">
       <h3 class="section-title">Tu mano</h3>
       <p class="hint">{{ helperText }}</p>
@@ -24,10 +25,9 @@ import { HumanPlayableMove, HumanTile } from '../../../core/models/api.models';
 
       <div class="moves">
         <button
-          *ngFor="let move of validMoves"
+          *ngFor="let move of activeMoves"
           type="button"
           class="btn btn-secondary btn-sm"
-          [disabled]="!selected || !matchTile(selected, move.tile)"
           (click)="play.emit({ tile: selected!, side: move.side })">
           Jugar {{ move.side }}
         </button>
@@ -49,7 +49,10 @@ export class HumanControlsComponent {
   @Output() pass = new EventEmitter<void>();
 
   selected: HumanTile | null = null;
-
+  get activeMoves(): HumanPlayableMove[] {
+    if (!this.selected) return [];
+    return this.validMoves.filter(move => this.matchTile(this.selected!, move.tile));
+  }
   get selectedKey(): string | null {
     return this.selected ? this.tileKey(this.selected) : null;
   }
@@ -80,5 +83,10 @@ export class HumanControlsComponent {
 
   matchTile(tileA: Pick<HumanTile, 'a' | 'b'>, tileB: Pick<HumanTile, 'a' | 'b'>): boolean {
     return this.tileKey(tileA) === this.tileKey(tileB);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['tiles']) {
+      this.selected = null;
+    }
   }
 }
