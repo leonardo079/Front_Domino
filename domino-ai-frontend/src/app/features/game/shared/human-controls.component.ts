@@ -29,7 +29,7 @@ import { OnChanges, SimpleChanges } from '@angular/core';
           type="button"
           class="btn btn-secondary btn-sm"
           (click)="play.emit({ tile: selected!, side: move.side })">
-          Jugar {{ move.side }}
+          {{ move.side === 'left' ? '← Jugar Izquierda' : 'Jugar Derecha →' }}
         </button>
 
         <button type="button" class="btn btn-danger btn-sm" (click)="pass.emit()" [disabled]="validMoves.length > 0">
