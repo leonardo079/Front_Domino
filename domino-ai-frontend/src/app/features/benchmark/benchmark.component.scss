@@ -1,149 +1,228 @@
+/* benchmark.component.scss */
+
 .benchmark-layout {
   display: grid;
-  grid-template-columns: 350px minmax(0, 1fr);
-  gap: 1rem;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 1.1rem;
+  animation: fadeUp .35s ease both;
 }
 
+/* ── Sidebar ── */
 .controls {
   position: sticky;
-  top: 78px;
+  top: 72px;
   align-self: start;
   display: grid;
-  gap: .85rem;
-
-  h2 {
-    margin: 0;
-    font-family: var(--font-display);
-  }
-
-  p {
-    margin: 0;
-    color: var(--ink-soft);
-  }
+  gap: .9rem;
 }
 
-fieldset {
-  border: 1px solid #d8dde7;
-  border-radius: .6rem;
-  padding: .65rem .7rem;
-
-  legend {
-    font-size: .8rem;
-    color: var(--ink-soft);
-    padding: 0 .3rem;
-  }
+.controls h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink-strong);
 }
 
-.check {
+.controls p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: .85rem;
+  line-height: 1.55;
+}
+
+/* ── Number input ── */
+.controls label {
   display: flex;
-  align-items: center;
-  gap: .45rem;
-  margin-bottom: .35rem;
+  flex-direction: column;
+  gap: .35rem;
+  font-size: .78rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--ink-soft);
 }
 
 input[type='number'] {
-  border: 1px solid #d8dde7;
-  background: #ffffff;
-  border-radius: .5rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: .55rem;
   color: var(--ink-strong);
-  padding: .55rem;
+  padding: .55rem .75rem;
+  font-family: var(--font-mono);
+  font-size: .9rem;
+  transition: border-color .2s, box-shadow .2s;
+  width: 100%;
+}
+input[type='number']:focus {
+  outline: none;
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
+/* ── Fieldset ── */
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: .75rem;
+  padding: .75rem .85rem;
+  background: var(--bg-alt);
+}
+
+legend {
+  font-size: .72rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--ink-soft);
+  padding: 0 .4rem;
+}
+
+/* ── Checkboxes ── */
+.check {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin-bottom: .4rem;
+  font-size: .85rem;
+  color: var(--ink-mid);
+  cursor: pointer;
+}
+
+.check:last-child { margin-bottom: 0; }
+
+.check input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-strong);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── Error ── */
+.error {
+  color: var(--danger);
+  font-size: .82rem;
+  background: var(--danger-soft);
+  border: 1px solid rgba(224,92,92,.25);
+  border-radius: .5rem;
+  padding: .5rem .7rem;
+  margin: 0;
+}
+
+/* ── Content area ── */
 .content {
   display: grid;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
+/* ── Status card ── */
 .status {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: .7rem;
+  gap: .8rem;
 }
 
+.status p {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  color: var(--ink-soft);
+}
+.status strong {
+  color: var(--ink-strong);
+}
+
+/* ── Table ── */
 .table-wrap {
   overflow: auto;
-  border: 1px solid #d8dde7;
-  border-radius: .65rem;
-  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: .85rem;
+  background: var(--surface);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 720px;
+  min-width: 680px;
 }
 
-th,
-td {
+th, td {
   text-align: left;
-  padding: .62rem .7rem;
-  border-bottom: 1px solid #e6ebf2;
-  background: #ffffff;
+  padding: .7rem .85rem;
+  border-bottom: 1px solid var(--border);
 }
 
 th {
-  font-size: .77rem;
+  font-size: .68rem;
+  font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: .08em;
+  letter-spacing: .1em;
   color: var(--ink-soft);
-  background: #f7f9fc;
+  background: var(--bg-alt);
+  font-weight: 500;
 }
 
+td {
+  background: var(--surface);
+  font-size: .85rem;
+  color: var(--ink-mid);
+}
+
+tr:last-child td { border-bottom: 0; }
+tr:hover td { background: var(--surface-strong); }
+
+/* ── Win rate bar ── */
 .rate-cell {
   min-width: 160px;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  gap: .5rem;
+  gap: .6rem;
 }
 
 .rate-track {
-  height: 12px;
-  background: #eef2f8;
-  border: 1px solid #d8dde7;
+  height: 8px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
   border-radius: 999px;
   overflow: hidden;
 }
 
 .rate-fill {
   height: 100%;
-  background: #1d6fa5;
+  background: linear-gradient(90deg, var(--agent-a) 0%, #7db8ff 100%);
+  border-radius: 999px;
+  transition: width .6s ease;
 }
 
+/* ── Event log ── */
 .event-log ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 220px;
+  max-height: 200px;
   overflow: auto;
 }
 
 .event-log li {
-  border-bottom: 1px dashed #d8dde7;
-  padding: .25rem .1rem;
+  border-bottom: 1px solid var(--border);
+  padding: .3rem .15rem;
   font-family: var(--font-mono);
-  font-size: .8rem;
-}
-
-.muted,
-.error {
+  font-size: .75rem;
   color: var(--ink-soft);
 }
 
-.error {
-  color: var(--danger);
+.event-log li:last-child { border-bottom: 0; }
+
+/* ── No results ── */
+.muted {
+  color: var(--ink-soft);
+  font-size: .88rem;
 }
 
-@media (max-width: 1080px) {
-  .benchmark-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .controls {
-    position: static;
-  }
-
-  .status {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 1100px) {
+  .benchmark-layout { grid-template-columns: 1fr; }
+  .controls { position: static; }
+  .status { grid-template-columns: 1fr; }
 }

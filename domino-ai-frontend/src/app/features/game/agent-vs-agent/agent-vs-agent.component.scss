@@ -1,106 +1,139 @@
+/* agent-vs-agent.component.scss */
+
 .page-grid {
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
-  gap: 1rem;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 1.1rem;
+  animation: fadeUp .35s ease both;
 }
 
+/* ── Sidebar controls ── */
 .controls {
   position: sticky;
-  top: 78px;
+  top: 72px;
   align-self: start;
   display: flex;
   flex-direction: column;
-  gap: .7rem;
-
-  h2 {
-    margin: 0;
-    font-family: var(--font-display);
-  }
-
-  p {
-    margin: 0;
-    color: var(--ink-soft);
-  }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: .35rem;
-    font-size: .9rem;
-    color: var(--ink-soft);
-  }
+  gap: .75rem;
 }
 
-select,
-input {
-  border: 1px solid var(--border);
-  background: var(--surface-strong);
-  border-radius: .5rem;
+.controls h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
   color: var(--ink-strong);
-  padding: .5rem;
 }
 
+.controls p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: .85rem;
+  line-height: 1.55;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* ── Actions ── */
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: .45rem;
 }
 
+/* ── Error ── */
 .error {
   color: var(--danger);
   font-size: .82rem;
+  background: var(--danger-soft);
+  border: 1px solid rgba(224,92,92,.25);
+  border-radius: .5rem;
+  padding: .5rem .7rem;
 }
 
+/* ── Session info ── */
 .session {
-  border-top: 1px dashed var(--border);
-  padding-top: .7rem;
+  border-top: 1px solid var(--border);
+  padding-top: .75rem;
   display: grid;
-  gap: .2rem;
-  font-size: .85rem;
+  gap: .25rem;
+  font-size: .82rem;
 }
 
+.session p {
+  color: var(--ink-soft);
+  margin: 0;
+  font-family: var(--font-mono);
+}
+
+.session strong {
+  color: var(--ink-mid);
+}
+
+/* ── Content area ── */
 .content {
   display: grid;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
-.visual-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 1rem;
-  align-items: start;
-}
-
+/* ── Stats grid ── */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: .6rem;
-
-  .card {
-    display: grid;
-    gap: .3rem;
-  }
-
-  strong {
-    font-family: var(--font-mono);
-    font-size: 1.1rem;
-  }
+  gap: .7rem;
 }
 
-@media (max-width: 1080px) {
-  .page-grid {
-    grid-template-columns: 1fr;
-  }
+.stats-grid .card {
+  display: grid;
+  gap: .3rem;
+  padding: .85rem;
+  text-align: center;
+  transition: border-color .2s, transform .2s;
+}
 
-  .controls {
-    position: static;
-  }
+.stats-grid .card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+}
 
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.stats-grid .card:nth-child(1) .section-title,
+.stats-grid .card:nth-child(3) .section-title { color: var(--agent-a); }
 
-  .visual-grid {
-    grid-template-columns: 1fr;
-  }
+.stats-grid .card:nth-child(2) .section-title,
+.stats-grid .card:nth-child(4) .section-title { color: var(--agent-b); }
+
+.stats-grid strong {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink-strong);
+}
+
+/* ── Visual grid ── */
+.visual-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 1.1rem;
+  align-items: start;
+}
+
+/* ── Quick summary ── */
+.card .section-title + p { margin: 0; }
+.card h3 + p { color: var(--ink-soft); }
+
+@media (max-width: 1100px) {
+  .page-grid { grid-template-columns: 1fr; }
+  .controls { position: static; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .visual-grid { grid-template-columns: 1fr; }
 }

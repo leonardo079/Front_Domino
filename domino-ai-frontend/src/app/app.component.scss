@@ -1,57 +1,102 @@
+/* app.component.scss */
+
 .app-shell {
   min-height: 100dvh;
+  position: relative;
+  z-index: 1;
 }
 
+/* ── Topbar ── */
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding: 0.85rem 1.2rem;
+  padding: 0 1.5rem;
+  height: 60px;
   border-bottom: 1px solid var(--border);
-  background: color-mix(in oklab, var(--surface) 86%, white 14%);
-  backdrop-filter: blur(6px);
+  background: rgba(13, 15, 20, 0.82);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
 }
 
+/* thin amber line at very top */
+.topbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent-strong) 40%, var(--accent-mid) 70%, transparent 100%);
+  opacity: .7;
+}
+
+/* ── Brand ── */
 .brand {
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 400;
   color: var(--ink-strong);
+  letter-spacing: .01em;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  flex-shrink: 0;
 }
 
+.brand::before {
+  content: '⬡';
+  font-size: 1rem;
+  color: var(--accent-strong);
+  line-height: 1;
+}
+
+/* ── Nav ── */
 nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.35rem;
+  gap: .2rem;
 }
 
 nav a {
-  border-radius: 999px;
+  border-radius: .5rem;
   color: var(--ink-soft);
-  font-size: 0.86rem;
+  font-size: .82rem;
   font-weight: 600;
-  padding: 0.35rem 0.8rem;
+  padding: .38rem .85rem;
   transition: background-color .2s ease, color .2s ease;
+  letter-spacing: .02em;
+  font-family: var(--font-mono);
 }
 
-nav a:hover,
+nav a:hover {
+  background: var(--surface-strong);
+  color: var(--ink-mid);
+  text-decoration: none;
+}
+
 nav a.active {
   background: var(--accent-soft);
   color: var(--accent-strong);
+  border: 1px solid rgba(232, 168, 68, .25);
 }
 
+/* ── Main ── */
 main {
-  padding: 1rem;
+  padding: 1.5rem;
+  animation: fadeUp .35s ease both;
 }
 
 @media (max-width: 840px) {
   .topbar {
     flex-direction: column;
     align-items: flex-start;
+    height: auto;
+    padding: .9rem 1rem;
   }
 }

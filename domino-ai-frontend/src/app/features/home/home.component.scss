@@ -1,59 +1,134 @@
+/* home.component.scss */
+
+/* ── Hero ── */
 .hero {
   border: 1px solid var(--border);
-  border-radius: 1rem;
-  padding: 1.5rem;
+  border-radius: 1.25rem;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  animation: fadeUp .4s ease both;
+}
+
+/* Atmospheric gradient orbs */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background:
-    radial-gradient(circle at 90% 20%, color-mix(in oklab, var(--accent-soft) 70%, white 30%) 0, transparent 35%),
-    radial-gradient(circle at 15% 80%, color-mix(in oklab, var(--warn-soft) 70%, white 30%) 0, transparent 32%),
-    var(--surface);
+    radial-gradient(ellipse 55% 60% at 92% 10%, rgba(232,168,68,.13) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 8%  90%, rgba(91,156,246,.1)  0%, transparent 65%);
+  pointer-events: none;
+}
 
-  h1 {
-    margin: .3rem 0 .4rem;
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.3rem);
-    line-height: 1.15;
-    max-width: 20ch;
-  }
+/* Decorative domino piece in corner */
+.hero::after {
+  content: '⬡';
+  position: absolute;
+  right: 1.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 9rem;
+  color: rgba(232,168,68,.06);
+  pointer-events: none;
+  line-height: 1;
+}
 
-  p {
-    max-width: 65ch;
-    color: var(--ink-soft);
-  }
+.hero > div {
+  position: relative;
+  z-index: 1;
 }
 
 .kicker {
-  margin: 0;
+  margin: 0 0 .6rem;
   text-transform: uppercase;
-  letter-spacing: .12em;
-  font-size: .72rem;
+  letter-spacing: .2em;
+  font-size: .68rem;
   color: var(--accent-strong);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.kicker::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background: var(--accent-strong);
+  border-radius: 2px;
+}
+
+.hero h1 {
+  margin: 0 0 .85rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+  line-height: 1.15;
+  max-width: 22ch;
+  color: var(--ink-strong);
   font-weight: 700;
 }
 
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent-strong);
+}
+
+.hero p {
+  max-width: 60ch;
+  color: var(--ink-soft);
+  margin: 0;
+  font-size: .95rem;
+}
+
+/* ── Module grid ── */
 .module-grid {
-  margin-top: 1.2rem;
+  margin-top: 1.25rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: .9rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  animation: fadeUp .5s .1s ease both;
 }
 
 .module {
   display: flex;
   flex-direction: column;
-  gap: .55rem;
+  gap: .65rem;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+  cursor: default;
+}
 
-  h2 {
-    margin: 0;
-    font-family: var(--font-display);
-  }
+.module:hover {
+  border-color: var(--border-light);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md), var(--glow-accent);
+}
 
-  p {
-    color: var(--ink-soft);
-    margin: 0;
-    flex: 1;
-  }
+/* colored top strip per card */
+.module:nth-child(1) { border-top: 2px solid var(--agent-a); }
+.module:nth-child(2) { border-top: 2px solid var(--accent-strong); }
+.module:nth-child(3) { border-top: 2px solid var(--ok); }
 
-  .btn {
-    justify-content: center;
-  }
+.module h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink-strong);
+}
+
+.module p {
+  color: var(--ink-soft);
+  margin: 0;
+  flex: 1;
+  font-size: .88rem;
+  line-height: 1.55;
+}
+
+.module .btn {
+  justify-content: center;
+  margin-top: .25rem;
 }

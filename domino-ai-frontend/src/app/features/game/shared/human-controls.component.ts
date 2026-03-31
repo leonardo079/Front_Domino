@@ -38,8 +38,7 @@ import { OnChanges, SimpleChanges } from '@angular/core';
       </div>
     </section>
   `,
-  styles: [`.hint{color:var(--ink-soft);font-size:.85rem;margin-top:0}.tiles{display:flex;flex-wrap:wrap;gap:.45rem}.tile-btn{display:flex;gap:.2rem;align-items:center;border:1px solid var(--border);padding:.35rem .45rem;border-radius:.5rem;background:var(--surface-strong);font-family:var(--font-mono);font-weight:700;cursor:pointer}.tile-btn span:first-child{border-right:1px solid var(--border);padding-right:.3rem}.tile-btn.selected{outline:2px solid var(--accent-strong)}.moves{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}`]
-})
+styles: [`.hint{color:var(--ink-soft);font-size:.85rem;margin-top:0}.tiles{display:flex;flex-wrap:wrap;gap:.45rem}.tile-btn{display:flex;gap:.2rem;align-items:center;border:1px solid #c8b89a;padding:.35rem .45rem;border-radius:.5rem;background:#f5ede0;font-family:var(--font-mono);font-weight:700;cursor:pointer;color:#2b2318;box-shadow:0 2px 6px rgba(0,0,0,.35);transition:border-color .2s,transform .15s,box-shadow .2s}.tile-btn span:first-child{border-right:1px solid #c8b89a;padding-right:.3rem}.tile-btn:hover{border-color:#e8a844;background:#fff8f0;transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.4)}.tile-btn.selected{outline:2px solid #e8a844;background:#fff3d6;color:#7a4a00}.moves{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}`]})
 export class HumanControlsComponent {
   @Input() tiles: HumanTile[] = [];
   @Input() validMoves: HumanPlayableMove[] = [];
